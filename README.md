@@ -24,7 +24,24 @@ The application provides role-based access for administrators and students, allo
 ### Student Features
 - View personal profile
 - View current room assignment
+## 📸 Application Screenshots
 
+### Login Page
+![Login Page](screenshots/login.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/dashboard.png)
+
+### Student Management
+![Student Management](screenshots/students.png)
+
+### Room Management
+![Room Management](screenshots/rooms.png)
+
+### Room Assignments
+![Room Assignments](screenshots/assignments.png)
+
+---
 ## 🛠️ Tech Stack
 
 | Layer | Technologies |
