@@ -12,22 +12,21 @@ import com.beyza.dormitory.enums.Role;
 import com.beyza.dormitory.repository.UserRepository;
 import com.beyza.dormitory.security.JwtService;
 
-
-
 @Service
 public class AuthService {
+
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
     public AuthService(UserRepository userRepository,
-                   JwtService jwtService,
-                   PasswordEncoder passwordEncoder) {
+                       JwtService jwtService,
+                       PasswordEncoder passwordEncoder) {
 
-    this.userRepository = userRepository;
-    this.jwtService = jwtService;
-    this.passwordEncoder = passwordEncoder;
-}
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public void register(RegisterRequest request) {
 
@@ -49,20 +48,31 @@ public class AuthService {
 
         userRepository.save(user);
     }
-   public String login(LoginRequest request) {
 
-    Optional<User> user = userRepository.findByEmail(request.getEmail());
+    public String login(LoginRequest request) {
 
-    if (user.isEmpty()) {
-        throw new RuntimeException("Incorrect email or password..");
+        Optional<User> user = userRepository.findByEmail(request.getEmail());
+
+        if (user.isEmpty()) {
+            throw new RuntimeException("Incorrect email or password.");
+        }
+
+        User foundUser = user.get();
+
+        // Check whether the account is active
+        if (!foundUser.isActive()) {
+            throw new RuntimeException("Incorrect email or password.");
+        }
+
+        // Verify password
+        if (!passwordEncoder.matches(
+                request.getPassword(),
+                foundUser.getPassword())) {
+
+            throw new RuntimeException("Incorrect email or password.");
+        }
+
+        // Generate JWT token
+        return jwtService.generateToken(foundUser);
     }
-
-    User foundUser = user.get();
-
-    if (!passwordEncoder.matches(request.getPassword(), foundUser.getPassword())) {
-    throw new RuntimeException("Incorrect email or password.");
-}
-
-    return jwtService.generateToken(foundUser);
-}
 }
