@@ -1,0 +1,16 @@
+.env
+.git
+.gitignore
+
+target/
+.idea/
+.vscode/
+
+*.log
+*.iml
+
+mvnw
+mvnw.cmd
+.mvn/
+HELP.md
+start.ps1

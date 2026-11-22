@@ -1,0 +1,25 @@
+# Backend
+**/target/
+**/build/
+*.class
+*.log
+
+# Frontend
+**/node_modules/
+**/dist/
+
+# Secrets
+.env
+.env.*
+!.env.example
+**/application-local.properties
+**/application-secret.properties
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
